@@ -140,6 +140,6 @@ public class CartManager : MonoBehaviour
             totalPrice += cartDict[kvp.Key].info.totalPrice; 
         }
 
-        totalPriceTMP.text = totalPrice.ToString("N0") + "원";
+        totalPriceTMP.text = "₩ " + totalPrice.ToString("N0") + "원";
     }
 }
