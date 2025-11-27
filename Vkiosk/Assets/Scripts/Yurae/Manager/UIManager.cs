@@ -62,6 +62,12 @@ public class UIManager : MonoBehaviour
     [Header("Menu Guide")]
     [SerializeField] private TextMeshProUGUI menuGuide;
 
+    [Header("Pay Select Canvas")]
+    [SerializeField] private GameObject paySelectCanvas;
+
+    [Header("Pay Wait Canvas")]
+    [SerializeField] private GameObject payWaitCanvas;
+
     private int orderNumber;
 
     private void Start()
@@ -130,7 +136,7 @@ public class UIManager : MonoBehaviour
         sessionManager.StopSession();
     }
 
-    public void GoPay()
+    public void Gocart()
     {
         headerCanvas.SetActive(false);
         floorCanvas.SetActive(false);
@@ -165,6 +171,7 @@ public class UIManager : MonoBehaviour
         categorySphere.SetActive(true);
 
         cartCanvas.SetActive(false);
+        paySelectCanvas.SetActive(false);
 
         MenuGrid[] menuGrids = payContent.GetComponentsInChildren<MenuGrid>();
 
@@ -182,6 +189,8 @@ public class UIManager : MonoBehaviour
 
     public void PayComplete()
     {
+        payWaitCanvas.SetActive(false);
+
         orderNumber++;
         string formatted = orderNumber.ToString("D3");
         orderNumTMP.text = formatted;
@@ -191,5 +200,25 @@ public class UIManager : MonoBehaviour
 
         soundManager.PayCompleteSound();
         Invoke("GoStartMenu", 5f);
+    }
+
+    public void PayWait()
+    {
+        paySelectCanvas.SetActive(false);
+        payWaitCanvas.SetActive(true);
+
+        Invoke("PayComplete", 3f);
+    }
+
+    public void CarttoPaySelect()
+    {
+        cartCanvas.SetActive(false);
+        paySelectCanvas.SetActive(true);
+    }
+
+    public void PaySelecttoCart()
+    {
+        paySelectCanvas.SetActive(false);
+        cartCanvas.SetActive(true);
     }
 }
